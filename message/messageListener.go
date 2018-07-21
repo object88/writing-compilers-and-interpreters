@@ -5,6 +5,6 @@ type MessageListener struct {
 }
 
 // MessageReceived injests a message
-func (ml *MessageListener) MessageReceived(m *Message) {
+func (ml *MessageListener) MessageReceived(m Message) {
 
 }

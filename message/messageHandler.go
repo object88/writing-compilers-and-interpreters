@@ -2,7 +2,7 @@ package message
 
 // MessageHandler distributes messages to message listeners
 type MessageHandler struct {
-	m         *Message
+	m         Message
 	listeners map[*MessageListener]bool
 }
 
@@ -26,7 +26,7 @@ func (mh *MessageHandler) RemoveListener(ml *MessageListener) {
 
 // SendMessage keeps the most recent message and notifies all connected message
 // listeners of it
-func (mh *MessageHandler) SendMessage(m *Message) {
+func (mh *MessageHandler) SendMessage(m Message) {
 	mh.m = m
 	for ml := range mh.listeners {
 		ml.MessageReceived(m)

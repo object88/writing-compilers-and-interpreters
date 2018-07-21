@@ -11,19 +11,18 @@ type PascalParserTD struct {
 	BaseParser
 }
 
-func NewPascalParserTD(scanner *Scanner, messageHandler *message.MessageHandler) *PascalParserTD {
+func NewPascalParserTD(scanner Scanner, messageHandler *message.MessageHandler) *PascalParserTD {
 	p := &PascalParserTD{
-		BaseParser: NewBaseParser(scanner, messageHandler),
+		BaseParser: *NewBaseParser(scanner, messageHandler),
 	}
 	return p
 }
 
 func (p *PascalParserTD) Parse() error {
-	var token Token
 	startTime := time.Now()
 
 	for {
-		token, err := p.NextToken()
+		_, err := p.NextToken()
 		if err != nil {
 			if err == io.EOF {
 				break
@@ -34,7 +33,7 @@ func (p *PascalParserTD) Parse() error {
 	}
 
 	endTime := time.Now()
-	d := endTime.Sub(startTime)
+	_ = endTime.Sub(startTime)
 
 	var m interface{}
 	p.mh.SendMessage(m)

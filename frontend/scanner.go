@@ -1,6 +1,7 @@
 package frontend
 
 type Scanner interface {
+	CurrentToken() (*Token, error)
 	NextToken() (*Token, error)
 }
 

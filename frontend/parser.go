@@ -12,12 +12,12 @@ type Parser interface {
 }
 
 type BaseParser struct {
-	scanner *Scanner
+	scanner Scanner
 	icode   intermediate.ICode
 	mh      *message.MessageHandler
 }
 
-func NewBaseParser(scanner *Scanner, messageHandler *message.MessageHandler) *BaseParser {
+func NewBaseParser(scanner Scanner, messageHandler *message.MessageHandler) *BaseParser {
 	return &BaseParser{
 		scanner: scanner,
 		mh:      messageHandler,

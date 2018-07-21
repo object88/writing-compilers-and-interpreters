@@ -2,7 +2,11 @@ package frontend
 
 type TokenType interface{}
 
-type Token struct {
+type Token interface {
+	extract() error
+}
+
+type BaseToken struct {
 	typ      TokenType
 	text     string
 	value    interface{}
@@ -11,8 +15,8 @@ type Token struct {
 	position int
 }
 
-func NewToken(s *Source) *Token {
-	t := &Token{
+func NewBaseToken(s *Source) *BaseToken {
+	t := &BaseToken{
 		source:   s,
 		lineNum:  s.GetLineNumber(),
 		position: s.GetPosition(),
@@ -25,7 +29,7 @@ func NewToken(s *Source) *Token {
 	return t
 }
 
-func (t *Token) extract() error {
+func (t *BaseToken) extract() error {
 	c, err := t.currentChar()
 	if err != nil {
 		return err
@@ -37,14 +41,14 @@ func (t *Token) extract() error {
 	return nil
 }
 
-func (t *Token) currentChar() (rune, error) {
+func (t *BaseToken) currentChar() (rune, error) {
 	return t.source.CurrentChar()
 }
 
-func (t *Token) nextChar() (rune, error) {
+func (t *BaseToken) nextChar() (rune, error) {
 	return t.source.NextChar()
 }
 
-func (t *Token) peekChar() (rune, error) {
+func (t *BaseToken) peekChar() (rune, error) {
 	return t.source.PeekChar()
 }
