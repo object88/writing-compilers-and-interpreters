@@ -16,8 +16,10 @@ type BaseBackend struct {
 	iCode  *intermediate.ICode
 }
 
-func NewBaseBackend(mh *message.MessageHandler) *BaseBackend {
-	return &BaseBackend{
+func NewBaseBackend(mh *message.MessageHandler) BaseBackend {
+	return BaseBackend{
 		MessageHandler: mh,
+		symTab:         nil,
+		iCode:          nil,
 	}
 }

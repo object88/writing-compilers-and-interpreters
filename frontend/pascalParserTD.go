@@ -33,9 +33,10 @@ func (p *PascalParserTD) Parse() error {
 	}
 
 	endTime := time.Now()
-	_ = endTime.Sub(startTime)
+	elapsedTime := endTime.Sub(startTime)
+	errorCount := 0
 
-	var m interface{}
+	m := NewParserSummary(errorCount, elapsedTime)
 	p.mh.SendMessage(m)
 
 	return nil
