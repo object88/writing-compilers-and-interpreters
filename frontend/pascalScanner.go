@@ -31,3 +31,11 @@ func (ps *PascalScanner) extractToken() (Token, error) {
 
 	return t, nil
 }
+
+func (ps *PascalScanner) CurrentToken() (Token, error) {
+	return nil, nil
+}
+
+func (ps *PascalScanner) NextToken() (Token, error) {
+	return nil, nil
+}

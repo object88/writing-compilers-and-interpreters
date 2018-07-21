@@ -8,7 +8,7 @@ import (
 type Parser interface {
 	Parse() error
 	GetErrorCount() int
-	CurrentToken() Token
+	CurrentToken() (Token, error)
 }
 
 type BaseParser struct {
@@ -24,10 +24,10 @@ func NewBaseParser(scanner Scanner, messageHandler *message.MessageHandler) *Bas
 	}
 }
 
-func (bp *BaseParser) CurrentToken() (*Token, error) {
+func (bp *BaseParser) CurrentToken() (Token, error) {
 	return bp.scanner.CurrentToken()
 }
 
-func (bp *BaseParser) NextToken() (*Token, error) {
+func (bp *BaseParser) NextToken() (Token, error) {
 	return bp.scanner.NextToken()
 }

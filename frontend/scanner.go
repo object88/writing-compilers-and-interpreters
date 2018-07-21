@@ -1,8 +1,8 @@
 package frontend
 
 type Scanner interface {
-	CurrentToken() (*Token, error)
-	NextToken() (*Token, error)
+	CurrentToken() (Token, error)
+	NextToken() (Token, error)
 }
 
 type BaseScanner struct {

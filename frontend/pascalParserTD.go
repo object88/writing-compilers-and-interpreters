@@ -41,6 +41,10 @@ func (p *PascalParserTD) Parse() error {
 	return nil
 }
 
+func (p *PascalParserTD) CurrentToken() (Token, error) {
+	return p.BaseParser.CurrentToken()
+}
+
 func (p *PascalParserTD) GetErrorCount() int {
 	return 0
 }
