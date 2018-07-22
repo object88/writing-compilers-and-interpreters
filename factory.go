@@ -23,13 +23,13 @@ func NewBackend(operation string, messageHandler *message.MessageHandler) (backe
 	}
 }
 
-func NewParser(language, parserType string, source *frontend.Source) (frontend.Parser, error) {
+func NewParser(language, parserType string, source *frontend.Source, messageHandler *message.MessageHandler) (frontend.Parser, error) {
 	switch strings.ToLower(language) {
 	case "pascal":
 		switch strings.ToLower(parserType) {
 		case "top-down":
 			s := frontend.NewPascalScanner(source)
-			return frontend.NewPascalParserTD(s, nil), nil
+			return frontend.NewPascalParserTD(s, messageHandler), nil
 		default:
 			return nil, errors.Errorf("For language '%s'; parser type '%s' is not supported", language, parserType)
 		}

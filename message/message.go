@@ -1,10 +1,13 @@
 package message
 
+import "fmt"
+
 type Message interface {
-	GetMessageID() int
+	GetMessageId() int
 }
 
 type BaseMessage struct {
+	fmt.Stringer
 	messageId int
 }
 
@@ -14,6 +17,6 @@ func NewBaseMessage(messageId int) BaseMessage {
 	}
 }
 
-func (bm *BaseMessage) GetMessageID() int {
+func (bm BaseMessage) GetMessageId() int {
 	return bm.messageId
 }

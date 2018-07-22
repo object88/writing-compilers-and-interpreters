@@ -1,6 +1,7 @@
 package interpreter
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/object88/writing-compilers-and-interpreters/message"
@@ -20,4 +21,8 @@ func NewInterpreterSummary(executionCount, runtimeErrors int, elapsedTime time.D
 		runtimeErrors:  runtimeErrors,
 		elapsedTime:    elapsedTime,
 	}
+}
+
+func (is *InterpreterSummary) String() string {
+	return fmt.Sprintf("\n%20d statements executed\n%20d runtime errors\n%20.2f seconds total execution\n", is.executionCount, is.runtimeErrors, is.elapsedTime.Seconds())
 }

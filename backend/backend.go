@@ -7,6 +7,7 @@ import (
 
 type Backend interface {
 	Process(iCode intermediate.ICode, symTab intermediate.SymTab) error
+	GetMessageHandler() *message.MessageHandler
 }
 
 type BaseBackend struct {
@@ -22,4 +23,8 @@ func NewBaseBackend(mh *message.MessageHandler) BaseBackend {
 		symTab:         nil,
 		iCode:          nil,
 	}
+}
+
+func (bb *BaseBackend) GetMessageHandler() *message.MessageHandler {
+	return bb.MessageHandler
 }

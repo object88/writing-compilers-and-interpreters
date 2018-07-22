@@ -3,6 +3,8 @@ package frontend
 import (
 	"bufio"
 	"io"
+
+	"github.com/object88/writing-compilers-and-interpreters/message"
 )
 
 // Source consumes a buffered reader to produce runes
@@ -14,15 +16,18 @@ type Source struct {
 
 	lineNum    int
 	currentPos int
+
+	mh *message.MessageHandler
 }
 
 // NewSource returns a new Source instance
-func NewSource(reader io.Reader) *Source {
+func NewSource(reader io.Reader, messageHandler *message.MessageHandler) *Source {
 	s := &Source{
 		bufr:       bufio.NewReader(reader),
 		r:          reader,
 		lineNum:    0,
 		currentPos: -2,
+		mh:         messageHandler,
 	}
 
 	return s
@@ -95,4 +100,8 @@ func (s *Source) readLine() error {
 	s.line = []rune(line)
 	s.lineNum++
 	return nil
+}
+
+func (s *Source) GetMessageHandler() *message.MessageHandler {
+	return s.mh
 }
