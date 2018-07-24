@@ -13,9 +13,9 @@ import (
 
 func NewBackend(operation string, messageHandler *message.MessageHandler) (backend.Backend, error) {
 	switch strings.ToLower(operation) {
-	case "execute":
+	case "compile":
 		return compiler.NewCodeGenerator(messageHandler), nil
-	case "interpret":
+	case "execute":
 		return interpreter.NewInterpreter(messageHandler), nil
 	default:
 		return nil, errors.Errorf("Operation '%s' is not supported", operation)

@@ -7,6 +7,7 @@ import (
 	"github.com/object88/writing-compilers-and-interpreters/message"
 )
 
+// ParserSummary message is the results from parsing a file
 type ParserSummary struct {
 	message.BaseMessage
 	statementCount int
@@ -14,6 +15,7 @@ type ParserSummary struct {
 	elapsedTime    time.Duration
 }
 
+// NewParserSummary returns a new instance of the ParserSummary struct
 func NewParserSummary(statementCount, errorCount int, elapsedTime time.Duration) *ParserSummary {
 	return &ParserSummary{
 		BaseMessage:    message.NewBaseMessage(3),
