@@ -7,6 +7,7 @@ import (
 	"github.com/object88/writing-compilers-and-interpreters/backend/compiler"
 	"github.com/object88/writing-compilers-and-interpreters/backend/interpreter"
 	"github.com/object88/writing-compilers-and-interpreters/frontend"
+	"github.com/object88/writing-compilers-and-interpreters/frontend/pascal"
 	"github.com/object88/writing-compilers-and-interpreters/message"
 	"github.com/pkg/errors"
 )
@@ -28,8 +29,8 @@ func NewParser(language, parserType string, source *frontend.Source, messageHand
 	case "pascal":
 		switch strings.ToLower(parserType) {
 		case "top-down":
-			s := frontend.NewPascalScanner(source)
-			return frontend.NewPascalParserTD(s, messageHandler), nil
+			s := pascal.NewPascalScanner(source)
+			return pascal.NewPascalParserTD(s, messageHandler), nil
 		default:
 			return nil, errors.Errorf("For language '%s'; parser type '%s' is not supported", language, parserType)
 		}

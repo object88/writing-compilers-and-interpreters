@@ -6,7 +6,7 @@ type Scanner interface {
 }
 
 type BaseScanner struct {
-	source       *Source
+	Source       *Source
 	currentToken Token
 }
 
@@ -18,18 +18,18 @@ var EOL = rune('\n')
 
 func NewBaseScanner(s *Source) *BaseScanner {
 	return &BaseScanner{
-		source: s,
+		Source: s,
 	}
 }
 
 // CurrentChar returns the current rune from the source
 func (bs *BaseScanner) CurrentChar() (rune, error) {
-	return bs.source.CurrentChar()
+	return bs.Source.CurrentChar()
 }
 
 // NextChar retreives the next rune from the source
 func (bs *BaseScanner) NextChar() (rune, error) {
-	return bs.source.NextChar()
+	return bs.Source.NextChar()
 }
 
 func (bs *BaseScanner) CurrentToken() (Token, error) {

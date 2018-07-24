@@ -1,18 +1,19 @@
-package frontend
+package pascal
 
 import (
 	"time"
 
+	"github.com/object88/writing-compilers-and-interpreters/frontend"
 	"github.com/object88/writing-compilers-and-interpreters/message"
 )
 
 type PascalParserTD struct {
-	BaseParser
+	frontend.BaseParser
 }
 
-func NewPascalParserTD(scanner Scanner, messageHandler *message.MessageHandler) *PascalParserTD {
+func NewPascalParserTD(scanner frontend.Scanner, messageHandler *message.MessageHandler) *PascalParserTD {
 	p := &PascalParserTD{
-		BaseParser: *NewBaseParser(scanner, messageHandler),
+		BaseParser: *frontend.NewBaseParser(scanner, messageHandler),
 	}
 	return p
 }
@@ -25,7 +26,7 @@ func (p *PascalParserTD) Parse() error {
 		if err != nil {
 			return err
 		}
-		if _, ok := t.(*EOFToken); ok {
+		if _, ok := t.(*frontend.EOFToken); ok {
 			break
 		}
 	}
@@ -35,13 +36,13 @@ func (p *PascalParserTD) Parse() error {
 	statementCount := 0
 	errorCount := 0
 
-	m := NewParserSummary(statementCount, errorCount, elapsedTime)
-	p.mh.SendMessage(m)
+	m := frontend.NewParserSummary(statementCount, errorCount, elapsedTime)
+	p.GetMessageHandler().SendMessage(m)
 
 	return nil
 }
 
-func (p *PascalParserTD) CurrentToken() (Token, error) {
+func (p *PascalParserTD) CurrentToken() (frontend.Token, error) {
 	return p.BaseParser.CurrentToken()
 }
 
