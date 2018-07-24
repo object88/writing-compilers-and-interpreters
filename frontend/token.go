@@ -37,7 +37,10 @@ func (t *BaseToken) extract() error {
 	t.text = string(c)
 	t.value = nil
 
-	t.nextChar()
+	_, err = t.nextChar()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

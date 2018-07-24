@@ -18,9 +18,9 @@ func NewBackendListener() *BackendListener {
 // MessageReceived injests a message
 func (bl *BackendListener) MessageReceived(m message.Message) {
 	switch m0 := m.(type) {
-	case compiler.CompilerSummary:
+	case *compiler.CompilerSummary:
 		fmt.Printf(m0.String())
-	case interpreter.InterpreterSummary:
+	case *interpreter.InterpreterSummary:
 		fmt.Printf(m0.String())
 	}
 }

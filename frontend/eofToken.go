@@ -1,11 +1,13 @@
 package frontend
 
-type EofToken struct{}
+// EOFToken represents the end of a file
+type EOFToken struct{}
 
-func NewEofToken(s *Source) *EofToken {
-	return &EofToken{}
+// NewEOFToken creates a new token for the end of the file
+func NewEOFToken(s *Source) *EOFToken {
+	return &EOFToken{}
 }
 
-func (ef *EofToken) extract() error {
+func (ef *EOFToken) extract() error {
 	return nil
 }

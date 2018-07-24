@@ -1,7 +1,6 @@
 package frontend
 
 import (
-	"io"
 	"time"
 
 	"github.com/object88/writing-compilers-and-interpreters/message"
@@ -22,13 +21,12 @@ func (p *PascalParserTD) Parse() error {
 	startTime := time.Now()
 
 	for {
-		_, err := p.NextToken()
+		t, err := p.NextToken()
 		if err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				return err
-			}
+			return err
+		}
+		if _, ok := t.(*EOFToken); ok {
+			break
 		}
 	}
 

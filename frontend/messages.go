@@ -42,5 +42,5 @@ func NewSourceLine(lineNumber int, lineText string) *SourceLine {
 }
 
 func (sl *SourceLine) String() string {
-	return fmt.Sprintf("%03d %s\n", sl.lineNumber, sl.lineText)
+	return fmt.Sprintf("%03d %s", sl.lineNumber, sl.lineText)
 }

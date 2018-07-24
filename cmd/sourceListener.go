@@ -15,9 +15,9 @@ func NewSourceListener() *SourceListener {
 }
 
 // MessageReceived injests a message
-func (bl *SourceListener) MessageReceived(m message.Message) {
+func (sl *SourceListener) MessageReceived(m message.Message) {
 	switch m0 := m.(type) {
-	case frontend.SourceLine:
+	case *frontend.SourceLine:
 		fmt.Printf(m0.String())
 	}
 }

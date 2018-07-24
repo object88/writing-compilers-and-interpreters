@@ -17,7 +17,7 @@ func NewParserListener() *ParserListener {
 // MessageReceived injests a message
 func (bl *ParserListener) MessageReceived(m message.Message) {
 	switch m0 := m.(type) {
-	case frontend.ParserSummary:
+	case *frontend.ParserSummary:
 		fmt.Printf(m0.String())
 	}
 }

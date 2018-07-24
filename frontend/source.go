@@ -39,11 +39,16 @@ func (s *Source) CurrentChar() (rune, error) {
 		_ = s.readLine()
 		return s.NextChar()
 	} else if s.line == nil {
-		return rune(0), io.EOF
+		return EOF, nil
 	} else if s.currentPos == -1 || s.currentPos == len(s.line) {
-		return rune(0), nil
+		return EOL, nil
 	} else if s.currentPos > len(s.line) {
-		s.readLine()
+		err := s.readLine()
+		if err == io.EOF {
+			return EOF, nil
+		} else if err != nil {
+			return rune(0), err
+		}
 		return s.NextChar()
 	}
 
@@ -59,7 +64,7 @@ func (s *Source) NextChar() (rune, error) {
 func (s *Source) PeekChar() (rune, error) {
 	s.CurrentChar()
 	if s.line == nil {
-		return rune(0), io.EOF
+		return EOF, nil
 	}
 
 	nextPos := s.currentPos + 1
@@ -67,7 +72,7 @@ func (s *Source) PeekChar() (rune, error) {
 		return s.line[nextPos], nil
 	}
 
-	return rune(0), nil
+	return EOL, nil
 }
 
 func (s *Source) GetLineNumber() int {
@@ -89,17 +94,20 @@ func (s *Source) Close() error {
 
 func (s *Source) readLine() error {
 	line, err := s.bufr.ReadString('\n')
-	if err != nil {
-		if err == io.EOF {
-			return nil
-		}
+	if err == io.EOF {
+		s.currentPos = -1
+		s.line = nil
+		s.lineNum++
+	} else if err != nil {
 		return err
+	} else {
+		s.currentPos = -1
+		s.line = []rune(line)
+		s.lineNum++
+		s.mh.SendMessage(NewSourceLine(s.lineNum, line))
 	}
 
-	s.currentPos = -1
-	s.line = []rune(line)
-	s.lineNum++
-	return nil
+	return err
 }
 
 func (s *Source) GetMessageHandler() *message.MessageHandler {

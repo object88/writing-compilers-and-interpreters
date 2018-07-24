@@ -1,8 +1,6 @@
 package frontend
 
 import (
-	"io"
-
 	"github.com/pkg/errors"
 )
 
@@ -19,23 +17,19 @@ func NewPascalScanner(s *Source) *PascalScanner {
 }
 
 func (ps *PascalScanner) extractToken() (Token, error) {
-	_, err := ps.BaseScanner.CurrentChar()
+	r, err := ps.BaseScanner.CurrentChar()
 	if err != nil {
-		if err == io.EOF {
-			return NewEofToken(ps.source), nil
-		}
 		return nil, errors.Wrapf(err, "Failed to retrieve current char from base scanner")
 	}
 
-	t := NewBaseToken(ps.source)
+	if r == EOF {
+		return NewEOFToken(ps.source), nil
+	}
 
+	t := NewBaseToken(ps.source)
 	return t, nil
 }
 
-func (ps *PascalScanner) CurrentToken() (Token, error) {
-	return nil, nil
-}
-
 func (ps *PascalScanner) NextToken() (Token, error) {
-	return nil, nil
+	return ps.extractToken()
 }
