@@ -28,7 +28,7 @@ func (ps *PascalScanner) extractToken() (frontend.Token, error) {
 	}
 
 	t := frontend.NewBaseToken(ps.Source)
-	return t, nil
+	return &t, nil
 }
 
 func (ps *PascalScanner) NextToken() (frontend.Token, error) {

@@ -6,4 +6,7 @@ Like the book's original content, this project is designed to compile and interp
 
 Certain changes have been made, which should not have any impact on the content of the work.  In particular, Steve Francia's [cobra package](https://github.com/spf13/cobra) is used to handle command line parsing.
 
-Other changes are natural occurances due to the differences between Go and Java.  Go has no exceptions, for example, while Java depends on them extensively.  The Go code in this project depends heavily on returned `error` instances, which changes the signature of functions.  We have to be mindful of how this effects the logical flow of the functions themselves.
+Other changes are natural occurances due to the differences between Go and Java.
+
+* Go has no exceptions, while Java depends on them extensively.  The Go code in this project depends heavily on returned `error` instances, which changes the signature of functions.  We have to be mindful of how this effects the logical flow of the functions themselves.  
+* Implementations of `Message` know how to format themselves as strings

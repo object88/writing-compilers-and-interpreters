@@ -29,20 +29,22 @@ func (ps *ParserSummary) String() string {
 	return fmt.Sprintf("\n%20d source lines\n%20d syntax errors\n%20.2f seconds total execution\n", ps.statementCount, ps.errorCount, ps.elapsedTime.Seconds())
 }
 
-type SourceLine struct {
+// SourceLineMessage is a Message containing a line number and that line's text
+type SourceLineMessage struct {
 	message.BaseMessage
 	lineNumber int
 	lineText   string
 }
 
-func NewSourceLine(lineNumber int, lineText string) *SourceLine {
-	return &SourceLine{
+// NewSourceLineMessage creates a new SourceLineMessage
+func NewSourceLineMessage(lineNumber int, lineText string) *SourceLineMessage {
+	return &SourceLineMessage{
 		BaseMessage: message.NewBaseMessage(4),
 		lineNumber:  lineNumber,
 		lineText:    lineText,
 	}
 }
 
-func (sl *SourceLine) String() string {
+func (sl *SourceLineMessage) String() string {
 	return fmt.Sprintf("%03d %s", sl.lineNumber, sl.lineText)
 }

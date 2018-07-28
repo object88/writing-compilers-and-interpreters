@@ -104,7 +104,7 @@ func (s *Source) readLine() error {
 		s.currentPos = -1
 		s.line = []rune(line)
 		s.lineNum++
-		s.mh.SendMessage(NewSourceLine(s.lineNum, line))
+		s.mh.SendMessage(NewSourceLineMessage(s.lineNum, line))
 	}
 
 	return err
