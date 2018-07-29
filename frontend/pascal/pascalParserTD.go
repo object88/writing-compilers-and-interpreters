@@ -50,7 +50,7 @@ func (p *PascalParserTD) Parse() error {
 	endTime := time.Now()
 	elapsedTime := endTime.Sub(startTime)
 
-	m := frontend.NewParserSummary(t.GetLineNumber(), p.errorHandler.errorCount, elapsedTime)
+	m := frontend.NewParserSummaryMessage(t.GetLineNumber(), p.errorHandler.errorCount, elapsedTime)
 	p.GetMessageHandler().SendMessage(m)
 
 	return nil

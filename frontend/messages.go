@@ -7,17 +7,18 @@ import (
 	"github.com/object88/writing-compilers-and-interpreters/message"
 )
 
-// ParserSummary message is the results from parsing a file
-type ParserSummary struct {
+// ParserSummaryMessage message is the results from parsing a file
+type ParserSummaryMessage struct {
 	message.BaseMessage
 	statementCount int
 	errorCount     int
 	elapsedTime    time.Duration
 }
 
-// NewParserSummary returns a new instance of the ParserSummary struct
-func NewParserSummary(statementCount, errorCount int, elapsedTime time.Duration) *ParserSummary {
-	return &ParserSummary{
+// NewParserSummaryMessage returns a new instance of the ParserSummaryMessage
+// struct
+func NewParserSummaryMessage(statementCount, errorCount int, elapsedTime time.Duration) *ParserSummaryMessage {
+	return &ParserSummaryMessage{
 		BaseMessage:    message.NewBaseMessage(3),
 		statementCount: statementCount,
 		errorCount:     errorCount,
@@ -25,7 +26,7 @@ func NewParserSummary(statementCount, errorCount int, elapsedTime time.Duration)
 	}
 }
 
-func (ps *ParserSummary) String() string {
+func (ps *ParserSummaryMessage) String() string {
 	return fmt.Sprintf("\n%20d source lines\n%20d syntax errors\n%20.2f seconds total execution\n", ps.statementCount, ps.errorCount, ps.elapsedTime.Seconds())
 }
 

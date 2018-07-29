@@ -8,16 +8,19 @@ import (
 	"github.com/object88/writing-compilers-and-interpreters/message"
 )
 
+// Interpreter executes code without compiling
 type Interpreter struct {
 	backend.BaseBackend
 }
 
+// NewInterpreter returns a new instance of Interpreter
 func NewInterpreter(messageHandler *message.MessageHandler) *Interpreter {
 	return &Interpreter{
 		BaseBackend: backend.NewBaseBackend(messageHandler),
 	}
 }
 
+// Process executes icode and symbol tables
 func (i *Interpreter) Process(iCode intermediate.ICode, symTab intermediate.SymTab) error {
 	startTime := time.Now()
 	endTime := time.Now()
@@ -25,7 +28,7 @@ func (i *Interpreter) Process(iCode intermediate.ICode, symTab intermediate.SymT
 	executionCount := 0
 	runtimeErrors := 0
 
-	m := NewInterpreterSummary(executionCount, runtimeErrors, elapsedTime)
+	m := NewSummaryMessage(executionCount, runtimeErrors, elapsedTime)
 	i.BaseBackend.MessageHandler.SendMessage(m)
 
 	return nil
