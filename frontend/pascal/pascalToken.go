@@ -4,12 +4,12 @@ import (
 	"github.com/object88/writing-compilers-and-interpreters/frontend"
 )
 
-type PascalToken struct {
+type Token struct {
 	frontend.BaseToken
 }
 
-func NewPascalToken(s *frontend.Source) *PascalToken {
-	return &PascalToken{
+func NewToken(s *frontend.Source) *Token {
+	return &Token{
 		BaseToken: frontend.NewBaseToken(s),
 	}
 }

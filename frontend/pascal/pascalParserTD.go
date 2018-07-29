@@ -8,21 +8,23 @@ import (
 	"github.com/object88/writing-compilers-and-interpreters/message"
 )
 
-// PascalParserTD is a top-down Pascal language parser
-type PascalParserTD struct {
+// ParserTD is a top-down Pascal language parser
+type ParserTD struct {
 	frontend.BaseParser
 	errorHandler errorHandler
 }
 
-func NewPascalParserTD(scanner frontend.Scanner, messageHandler *message.MessageHandler) *PascalParserTD {
-	p := &PascalParserTD{
+// NewParserTD returns a new ParserTD instance
+func NewParserTD(scanner frontend.Scanner, messageHandler *message.MessageHandler) *ParserTD {
+	p := &ParserTD{
 		BaseParser:   *frontend.NewBaseParser(scanner, messageHandler),
 		errorHandler: errorHandler{},
 	}
 	return p
 }
 
-func (p *PascalParserTD) Parse() error {
+// Parse consumes from the scanner and produces tokens
+func (p *ParserTD) Parse() error {
 	mh := p.GetMessageHandler()
 	startTime := time.Now()
 	var t frontend.Token
@@ -56,11 +58,11 @@ func (p *PascalParserTD) Parse() error {
 	return nil
 }
 
-func (p *PascalParserTD) CurrentToken() (frontend.Token, error) {
+func (p *ParserTD) CurrentToken() (frontend.Token, error) {
 	return p.BaseParser.CurrentToken()
 }
 
 // GetErrorCount returns the number of errors encountered by the parser
-func (p *PascalParserTD) GetErrorCount() int {
+func (p *ParserTD) GetErrorCount() int {
 	return 0
 }

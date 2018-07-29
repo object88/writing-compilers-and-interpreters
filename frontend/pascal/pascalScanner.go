@@ -5,19 +5,19 @@ import (
 	"github.com/pkg/errors"
 )
 
-// PascalScanner is a Pascal language specific scanner
-type PascalScanner struct {
+// Scanner is a Pascal language specific scanner
+type Scanner struct {
 	frontend.BaseScanner
 }
 
-// NewPascalScanner instantiates and returns a new PascalScanner
-func NewPascalScanner(s *frontend.Source) *PascalScanner {
-	return &PascalScanner{
+// NewScanner instantiates and returns a new Scanner
+func NewScanner(s *frontend.Source) *Scanner {
+	return &Scanner{
 		BaseScanner: *frontend.NewBaseScanner(s),
 	}
 }
 
-func (ps *PascalScanner) extractToken() (frontend.Token, error) {
+func (ps *Scanner) extractToken() (frontend.Token, error) {
 	r, err := ps.BaseScanner.CurrentChar()
 	if err != nil {
 		return nil, errors.Wrapf(err, "Failed to retrieve current char from base scanner")
@@ -31,6 +31,6 @@ func (ps *PascalScanner) extractToken() (frontend.Token, error) {
 	return &t, nil
 }
 
-func (ps *PascalScanner) NextToken() (frontend.Token, error) {
+func (ps *Scanner) NextToken() (frontend.Token, error) {
 	return ps.extractToken()
 }
