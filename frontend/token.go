@@ -7,7 +7,7 @@ type Token interface {
 	GetText() string
 	GetType() TokenType
 	GetValue() interface{}
-	extract() error
+	// extract() error
 }
 
 // BaseToken contains essential token information; line number, position, and
@@ -30,9 +30,9 @@ func NewBaseToken(s *Source) BaseToken {
 		position: s.GetPosition(),
 	}
 
-	// TODO: It doesn't seem like it's idiomatic to return an error from a
-	// "NewFoo" method; but what should we do if we encounter one here?
-	_ = t.extract()
+	// // TODO: It doesn't seem like it's idiomatic to return an error from a
+	// // "NewFoo" method; but what should we do if we encounter one here?
+	// _ = t.extract()
 
 	return t
 }
@@ -62,29 +62,38 @@ func (t *BaseToken) GetValue() interface{} {
 	return t.value
 }
 
-func (t *BaseToken) extract() error {
-	c, err := t.currentChar()
-	if err != nil {
-		return err
-	}
-	t.text = string(c)
-	t.value = nil
+// func (t *BaseToken) extract() error {
+// 	c, err := t.CurrentChar()
+// 	if err != nil {
+// 		return err
+// 	}
+// 	t.text = string(c)
+// 	t.value = nil
 
-	_, err = t.nextChar()
-	if err != nil {
-		return err
-	}
-	return nil
+// 	_, err = t.NextChar()
+// 	if err != nil {
+// 		return err
+// 	}
+// 	return nil
+// }
+
+func (t *BaseToken) AssignTypeAndText(typ TokenType, text string) {
+	t.text = text
+	t.typ = typ
 }
 
-func (t *BaseToken) currentChar() (rune, error) {
+func (t *BaseToken) AssignValue(val interface{}) {
+	t.value = val
+}
+
+func (t *BaseToken) CurrentChar() (rune, error) {
 	return t.source.CurrentChar()
 }
 
-func (t *BaseToken) nextChar() (rune, error) {
+func (t *BaseToken) NextChar() (rune, error) {
 	return t.source.NextChar()
 }
 
-func (t *BaseToken) peekChar() (rune, error) {
+func (t *BaseToken) PeekChar() (rune, error) {
 	return t.source.PeekChar()
 }

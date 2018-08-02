@@ -40,7 +40,7 @@ func (p *ParserTD) Parse() error {
 			break
 		}
 
-		if PascalTokenType(t.GetType()) == ERROR {
+		if TokenType(t.GetType()) == ErrorTokenType {
 			p.errorHandler.flag(t, errors.New("WTF"), p)
 		} else {
 			tm := NewTokenMessage(t)

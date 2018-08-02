@@ -1,7 +1,9 @@
 package frontend
 
-type TokenType string
+// TokenType is a numeric indicator for a token type
+type TokenType int
 
 const (
-	EOFTokenType TokenType = "EOF"
+	// EOFTokenType indicates an EOFToken
+	EOFTokenType TokenType = iota
 )
