@@ -44,6 +44,8 @@ func (ps *Scanner) extractToken() (frontend.Token, error) {
 		token, err = NewSpecialSymbolToken(ps.Source)
 	} else {
 		// Invalid character case
+		token = NewErrorToken(ps.Source, InvalidCharacter, r)
+		_, err = ps.NextChar()
 	}
 	// t := frontend.NewBaseToken(ps.Source)
 
