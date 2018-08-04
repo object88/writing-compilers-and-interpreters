@@ -36,7 +36,7 @@ func (ps *Scanner) extractToken() (frontend.Token, error) {
 	if unicode.IsLetter(r) {
 		token, err = NewWordToken(ps.Source)
 	} else if unicode.IsNumber(r) {
-
+		token, err = NewNumberToken(ps.Source)
 	} else if r == '\'' {
 		token, err = NewStringToken(ps.Source)
 	} else if false {

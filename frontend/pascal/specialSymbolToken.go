@@ -5,10 +5,13 @@ import (
 	"github.com/pkg/errors"
 )
 
+// SpecialSymbolToken represents a reserved non-word token in the pascal
+// language, such as `.` and `:=`.
 type SpecialSymbolToken struct {
 	Token
 }
 
+// NewSpecialSymbolToken returns a new instance of a SpecialSymbolToken
 func NewSpecialSymbolToken(s *frontend.Source) (*SpecialSymbolToken, error) {
 	sst := &SpecialSymbolToken{
 		Token: *NewToken(s),
@@ -102,7 +105,7 @@ func (sst *SpecialSymbolToken) extract() error {
 		}
 	}
 
-	typ, ok := SpecialSymbolTokenTypes[text]
+	typ, ok := specialSymbolTokenTypes[text]
 	if !ok {
 		typ = ErrorTokenType
 	}

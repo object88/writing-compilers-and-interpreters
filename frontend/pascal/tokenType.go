@@ -32,6 +32,8 @@ const (
 	DotDotTokenType
 
 	IdentifierTokenType
+	IntegerTokenType
+	RealTokenType
 	StringTokenType
 	ErrorTokenType
 )
@@ -39,11 +41,11 @@ const (
 // TokenType is a Pascal-specific token type
 type TokenType frontend.TokenType
 
-var ReservedTokenTypes = map[string]TokenType{
+var reservedTokenTypes = map[string]TokenType{
 	"AND": AndTokenType,
 }
 
-var SpecialSymbolTokenTypes = map[string]TokenType{
+var specialSymbolTokenTypes = map[string]TokenType{
 	"+":  PlusTokenType,
 	"-":  MinusTokenType,
 	"*":  AsteriskTokenType,

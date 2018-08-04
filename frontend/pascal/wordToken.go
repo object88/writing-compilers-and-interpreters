@@ -45,7 +45,7 @@ func (wt *WordToken) extract() error {
 
 	text := sb.String()
 	var typ TokenType
-	if t, ok := ReservedTokenTypes[strings.ToUpper(text)]; ok {
+	if t, ok := reservedTokenTypes[strings.ToUpper(text)]; ok {
 		// text is a reserved word
 		typ = t
 	} else {
