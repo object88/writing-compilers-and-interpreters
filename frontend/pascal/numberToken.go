@@ -19,8 +19,8 @@ type NumberToken struct {
 }
 
 // NewNumberToken returns a new instance of a NumberToken struct
-func NewNumberToken(s *frontend.Source) (*WordToken, error) {
-	wt := &WordToken{
+func NewNumberToken(s *frontend.Source) (*NumberToken, error) {
+	wt := &NumberToken{
 		Token: *NewToken(s),
 	}
 
@@ -39,7 +39,7 @@ func (nt *NumberToken) extract() error {
 	if err != nil {
 		// TODO
 	}
-	if TokenType(nt.GetType()) == ErrorTokenType {
+	if nt.GetType() == ErrorTokenType {
 		return nil
 	}
 
@@ -69,7 +69,7 @@ func (nt *NumberToken) extract() error {
 			if err != nil {
 				return errors.Wrap(err, "pascal.NumberToken::extract: ***")
 			}
-			if TokenType(nt.GetType()) == ErrorTokenType {
+			if nt.GetType() == ErrorTokenType {
 				return nil
 			}
 		}
@@ -102,14 +102,14 @@ func (nt *NumberToken) extract() error {
 		}
 	}
 
-	if TokenType(nt.GetType()) == IntegerTokenType {
+	if nt.GetType() == IntegerTokenType {
 		integerValue := nt.computeIntegerValue(wholeDigits)
-		if TokenType(nt.GetType()) != ErrorTokenType {
+		if nt.GetType() != ErrorTokenType {
 			nt.AssignValue(integerValue)
 		}
-	} else if TokenType(nt.GetType()) == RealTokenType {
+	} else if nt.GetType() == RealTokenType {
 		floatValue := nt.computeFloatValue(wholeDigits, fractionalDigits, exponentDigits, exponentSign)
-		if TokenType(nt.GetType()) != ErrorTokenType {
+		if nt.GetType() != ErrorTokenType {
 			nt.AssignValue(floatValue)
 		}
 	}
@@ -126,7 +126,7 @@ func (nt *NumberToken) unsignedIntegerDigits(tb *strings.Builder) (string, error
 
 	if !unicode.IsDigit(currentChar) {
 		nt.AssignTypeAndText(frontend.TokenType(ErrorTokenType), "")
-		nt.AssignValue("INVALID_NUMBER")
+		nt.AssignValue(InvalidNumber)
 		return "", nil
 	}
 
@@ -164,7 +164,7 @@ func (nt *NumberToken) computeIntegerValue(digits string) int {
 	}
 
 	nt.AssignTypeAndText(frontend.TokenType(ErrorTokenType), "")
-	nt.AssignValue("RANGE_INTEGER")
+	nt.AssignValue(RangeInteger)
 	return 0
 }
 
@@ -189,7 +189,7 @@ func (nt *NumberToken) computeFloatValue(wholeDigits, fractionalDigits, exponent
 
 	if exp > maxExponent {
 		nt.AssignTypeAndText(frontend.TokenType(ErrorTokenType), "")
-		nt.AssignValue("RANGE_REAL")
+		nt.AssignValue(RangeReal)
 		return 0.0
 	}
 

@@ -109,7 +109,7 @@ func (sst *SpecialSymbolToken) extract() error {
 	if !ok {
 		typ = ErrorTokenType
 	}
-	sst.AssignTypeAndText(frontend.TokenType(typ), text)
+	sst.AssignTypeAndText(typ, text)
 
 	return nil
 }

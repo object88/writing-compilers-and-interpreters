@@ -36,7 +36,6 @@ func (st *StringToken) extract() error {
 	tb.WriteRune('\'')
 
 	for {
-		// TODO: actually consume this string.
 		if unicode.Is(unicode.Pattern_White_Space, currentChar) {
 			currentChar = ' '
 		}
@@ -57,6 +56,7 @@ func (st *StringToken) extract() error {
 				vb.WriteRune('\'')
 				_, err = st.NextChar()
 				currentChar, err = st.NextChar()
+				peekedChar, err = st.PeekChar()
 			}
 		}
 
@@ -71,11 +71,11 @@ func (st *StringToken) extract() error {
 			return errors.Wrap(err, "pascal.StringToken::extract: failed to consume final single-quote")
 		}
 		tb.WriteRune('\'')
-		st.AssignTypeAndText(frontend.TokenType(StringTokenType), tb.String())
+		st.AssignTypeAndText(StringTokenType, tb.String())
 		st.AssignValue(vb.String())
 	} else {
-		st.AssignTypeAndText(frontend.TokenType(ErrorTokenType), tb.String())
-		st.AssignValue("UNEXPECTED_EOF")
+		st.AssignTypeAndText(ErrorTokenType, tb.String())
+		st.AssignValue(UnexpectedEOF)
 	}
 
 	return nil

@@ -30,10 +30,6 @@ func NewBaseToken(s *Source) BaseToken {
 		position: s.GetPosition(),
 	}
 
-	// // TODO: It doesn't seem like it's idiomatic to return an error from a
-	// // "NewFoo" method; but what should we do if we encounter one here?
-	// _ = t.extract()
-
 	return t
 }
 
@@ -61,21 +57,6 @@ func (t *BaseToken) GetType() TokenType {
 func (t *BaseToken) GetValue() interface{} {
 	return t.value
 }
-
-// func (t *BaseToken) extract() error {
-// 	c, err := t.CurrentChar()
-// 	if err != nil {
-// 		return err
-// 	}
-// 	t.text = string(c)
-// 	t.value = nil
-
-// 	_, err = t.NextChar()
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
 
 func (t *BaseToken) AssignTypeAndText(typ TokenType, text string) {
 	t.text = text

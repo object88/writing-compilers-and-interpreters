@@ -25,7 +25,7 @@ func NewTokenMessage(token frontend.Token) *TokenMessage {
 func (tm *TokenMessage) String() string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf(">>> %-15s line=%03d, pos=%2d, text=\"%s\"\n", tm.token.GetType(), tm.token.GetLineNumber(), tm.token.GetPosition(), tm.token.GetText()))
+	sb.WriteString(fmt.Sprintf(">>> % 15s line=%03d, pos=%2d, text=\"%s\"\n", tm.token.GetType().String(), tm.token.GetLineNumber(), tm.token.GetPosition(), tm.token.GetText()))
 	v := tm.token.GetValue()
 	if v != nil {
 		sb.WriteString(">>>                 value=\"")

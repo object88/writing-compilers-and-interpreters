@@ -39,7 +39,7 @@ func (ps *Scanner) extractToken() (frontend.Token, error) {
 		token, err = NewNumberToken(ps.Source)
 	} else if r == '\'' {
 		token, err = NewStringToken(ps.Source)
-	} else if false {
+	} else if _, ok := specialSymbolTokenTypes[string(r)]; ok {
 		// Special character case
 		token, err = NewSpecialSymbolToken(ps.Source)
 	} else {
@@ -47,7 +47,6 @@ func (ps *Scanner) extractToken() (frontend.Token, error) {
 		token = NewErrorToken(ps.Source, InvalidCharacter, r)
 		_, err = ps.NextChar()
 	}
-	// t := frontend.NewBaseToken(ps.Source)
 
 	if err != nil {
 		// Handle the error from constructing and extracting the token

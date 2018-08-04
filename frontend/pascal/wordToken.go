@@ -37,14 +37,14 @@ func (wt *WordToken) extract() error {
 			break
 		}
 		sb.WriteRune(r)
-		r, err = wt.BaseToken.CurrentChar()
+		r, err = wt.BaseToken.NextChar()
 		if err != nil {
 			return errors.Wrap(err, "pascal.WordToken::Extract: while extracting char")
 		}
 	}
 
 	text := sb.String()
-	var typ TokenType
+	var typ frontend.TokenType
 	if t, ok := reservedTokenTypes[strings.ToUpper(text)]; ok {
 		// text is a reserved word
 		typ = t
