@@ -10,15 +10,15 @@ import (
 // source code
 type SyntaxErrorMessage struct {
 	TokenMessage
-	err error
+	errCode errorCode
 }
 
 // NewSyntaxErrorMessage returns a new instance of the SyntaxErrorMessage
 // struct
-func NewSyntaxErrorMessage(token frontend.Token, err error) *SyntaxErrorMessage {
+func NewSyntaxErrorMessage(token frontend.Token, errCode errorCode) *SyntaxErrorMessage {
 	return &SyntaxErrorMessage{
 		TokenMessage: *NewTokenMessage(token),
-		err:          err,
+		errCode:      errCode,
 	}
 }
 
@@ -28,7 +28,7 @@ func (tm *SyntaxErrorMessage) String() string {
 	spaceCount := 5 + tm.token.GetPosition()
 	sb.WriteString(strings.Repeat(" ", spaceCount))
 	sb.WriteString("^\n*** ")
-	sb.WriteString(tm.err.Error())
+	sb.WriteString(tm.errCode.message)
 
 	t := tm.token.GetText()
 	if len(t) > 0 {

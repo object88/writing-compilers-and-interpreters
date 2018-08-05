@@ -1,7 +1,6 @@
 package pascal
 
 import (
-	"errors"
 	"time"
 
 	"github.com/object88/writing-compilers-and-interpreters/frontend"
@@ -41,7 +40,7 @@ func (p *ParserTD) Parse() error {
 		}
 
 		if t.GetType() == ErrorTokenType {
-			p.errorHandler.flag(t, errors.New("WTF"), p)
+			p.errorHandler.flag(t, t.GetValue().(errorCode), p)
 		} else {
 			tm := NewTokenMessage(t)
 			mh.SendMessage(tm)

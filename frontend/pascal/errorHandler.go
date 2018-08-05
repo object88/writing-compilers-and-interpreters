@@ -16,8 +16,9 @@ type errorHandler struct {
 	errorCount int
 }
 
-func (eh *errorHandler) flag(token frontend.Token, err error, parser frontend.Parser) {
-	parser.GetMessageHandler().SendMessage(nil)
+func (eh *errorHandler) flag(token frontend.Token, errCode errorCode, parser frontend.Parser) {
+	m := NewSyntaxErrorMessage(token, errCode)
+	parser.GetMessageHandler().SendMessage(m)
 
 	eh.errorCount++
 	if eh.errorCount > maxErrors {
@@ -25,4 +26,8 @@ func (eh *errorHandler) flag(token frontend.Token, err error, parser frontend.Pa
 	}
 }
 
-func (eh *errorHandler) abortTranslation(reason AbortionReason, parser frontend.Parser) {}
+func (eh *errorHandler) abortTranslation(reason AbortionReason, parser frontend.Parser) {
+
+	// m := NewSyntaxErrorMessage(reason.)
+	// parser.GetMessageHandler().SendMessage(m)
+}

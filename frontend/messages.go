@@ -47,5 +47,5 @@ func NewSourceLineMessage(lineNumber int, lineText string) *SourceLineMessage {
 }
 
 func (sl *SourceLineMessage) String() string {
-	return fmt.Sprintf("%03d %s", sl.lineNumber, sl.lineText)
+	return fmt.Sprintf("%04d %s", sl.lineNumber, sl.lineText)
 }
