@@ -36,6 +36,7 @@ func (tm *SyntaxErrorMessage) String() string {
 		sb.WriteString(t)
 		sb.WriteString("\"]")
 	}
+	sb.WriteRune('\n')
 
 	return sb.String()
 }

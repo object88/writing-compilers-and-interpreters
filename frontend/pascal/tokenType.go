@@ -24,7 +24,7 @@ const (
 	ColonEqualsTokenTypeCode
 	ColonTokenTypeCode
 	LessThanOrEqualsTokenTypeCode
-	LessThanOrLessThanTokenTypeCode
+	LessThanOrGreaterThanTokenTypeCode
 	LessThanTokenTypeCode
 	GreaterThanOrEqualsTokenTypeCode
 	GreaterThanTokenTypeCode
@@ -60,7 +60,7 @@ var CarotTokenType = frontend.NewTokenType(CarotTokenTypeCode, "Carot")
 var ColonEqualsTokenType = frontend.NewTokenType(ColonEqualsTokenTypeCode, "ColonEquals")
 var ColonTokenType = frontend.NewTokenType(ColonTokenTypeCode, "Colon")
 var LessThanOrEqualsTokenType = frontend.NewTokenType(LessThanOrEqualsTokenTypeCode, "LessThanOrEquals")
-var LessThanOrLessThanTokenType = frontend.NewTokenType(LessThanOrLessThanTokenTypeCode, "LessThanOrLessThan")
+var LessThanOrGreaterThanTokenType = frontend.NewTokenType(LessThanOrGreaterThanTokenTypeCode, "LessThanOrGreaterThan")
 var LessThanTokenType = frontend.NewTokenType(LessThanTokenTypeCode, "LessThan")
 var GreaterThanOrEqualsTokenType = frontend.NewTokenType(GreaterThanOrEqualsTokenTypeCode, "GreaterThanOrEquals")
 var GreaterThanTokenType = frontend.NewTokenType(GreaterThanTokenTypeCode, "GreaterThan")
@@ -97,7 +97,7 @@ var specialSymbolTokenTypes = map[string]frontend.TokenType{
 	":=": ColonEqualsTokenType,
 	":":  ColonTokenType,
 	"<=": LessThanOrEqualsTokenType,
-	"<>": LessThanOrLessThanTokenType,
+	"<>": LessThanOrGreaterThanTokenType,
 	"<":  LessThanTokenType,
 	">=": GreaterThanOrEqualsTokenType,
 	">":  GreaterThanTokenType,

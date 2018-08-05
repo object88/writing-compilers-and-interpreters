@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	maxExponent int = 32
+	// TODO: This needs to be researched; picked a number out of thin air
+	maxExponent int32 = 32
 )
 
 // NumberToken represents a hard-coded number in pascal source
@@ -20,22 +21,23 @@ type NumberToken struct {
 
 // NewNumberToken returns a new instance of a NumberToken struct
 func NewNumberToken(s *frontend.Source) (*NumberToken, error) {
-	wt := &NumberToken{
+	nt := &NumberToken{
 		Token: *NewToken(s),
 	}
 
-	err := wt.extract()
+	var tb strings.Builder
+	err := nt.extract(&tb)
+	nt.AssignTypeAndText(nt.GetType(), tb.String())
 
-	return wt, err
+	return nt, err
 }
 
 // Extract will process the source to populate the token
-func (nt *NumberToken) extract() error {
-	var tb strings.Builder
+func (nt *NumberToken) extract(tb *strings.Builder) error {
 
 	nt.AssignTypeAndText(frontend.TokenType(IntegerTokenType), "")
 
-	wholeDigits, err := nt.unsignedIntegerDigits(&tb)
+	wholeDigits, err := nt.unsignedIntegerDigits(tb)
 	if err != nil {
 		// TODO
 	}
@@ -65,7 +67,7 @@ func (nt *NumberToken) extract() error {
 			if err != nil {
 				return errors.Wrap(err, "pascal.NumberToken::extract: ???")
 			}
-			fractionalDigits, err = nt.unsignedIntegerDigits(&tb)
+			fractionalDigits, err = nt.unsignedIntegerDigits(tb)
 			if err != nil {
 				return errors.Wrap(err, "pascal.NumberToken::extract: ***")
 			}
@@ -96,7 +98,7 @@ func (nt *NumberToken) extract() error {
 			}
 		}
 
-		exponentDigits, err = nt.unsignedIntegerDigits(&tb)
+		exponentDigits, err = nt.unsignedIntegerDigits(tb)
 		if err != nil {
 			return errors.Wrap(err, "pascal.NumberToken::extract: ///")
 		}
@@ -142,19 +144,19 @@ func (nt *NumberToken) unsignedIntegerDigits(tb *strings.Builder) (string, error
 	return digits.String(), nil
 }
 
-func (nt *NumberToken) computeIntegerValue(digits string) int {
+func (nt *NumberToken) computeIntegerValue(digits string) int32 {
 	if digits == "" {
 		return 0
 	}
 
-	integerValue := 0
-	prevValue := -1
+	var integerValue int32
+	var prevValue int32 = -1
 	index := 0
 
 	for index < len(digits) && integerValue >= prevValue {
 		prevValue = integerValue
 		integerValue *= 10
-		integerValue += int(digits[index] - byte('0'))
+		integerValue += int32(digits[index] - byte('0'))
 		index++
 	}
 
@@ -168,8 +170,7 @@ func (nt *NumberToken) computeIntegerValue(digits string) int {
 	return 0
 }
 
-func (nt *NumberToken) computeFloatValue(wholeDigits, fractionalDigits, exponentDigits string, exponentSign rune) float64 {
-	var floatValue float64
+func (nt *NumberToken) computeFloatValue(wholeDigits, fractionalDigits, exponentDigits string, exponentSign rune) float32 {
 	exponentValue := nt.computeIntegerValue(exponentDigits)
 	digits := wholeDigits
 
@@ -178,11 +179,11 @@ func (nt *NumberToken) computeFloatValue(wholeDigits, fractionalDigits, exponent
 	}
 
 	if fractionalDigits != "" {
-		exponentValue -= len(fractionalDigits)
+		exponentValue -= int32(len(fractionalDigits))
 		digits += fractionalDigits
 	}
 
-	exp := exponentValue + len(wholeDigits)
+	exp := exponentValue + int32(len(wholeDigits))
 	if exp < 0 {
 		exp = -exp
 	}
@@ -193,16 +194,16 @@ func (nt *NumberToken) computeFloatValue(wholeDigits, fractionalDigits, exponent
 		return 0.0
 	}
 
-	index := 0
-	for index < len(digits) {
+	var floatValue float64
+
+	for index := 0; index < len(digits); index++ {
 		floatValue *= 10
 		floatValue += float64(digits[index] - byte('0'))
-		index++
 	}
 
 	if exponentValue != 0 {
-		floatValue *= math.Pow10(exponentValue)
+		floatValue *= math.Pow10(int(exponentValue))
 	}
 
-	return floatValue
+	return float32(floatValue)
 }
